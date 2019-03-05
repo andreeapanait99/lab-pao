@@ -35,8 +35,16 @@ public class LibraryService
         if (index != -1)
         {
             Date startDate = new Date();
-            reservations[reservationsCount] = new Reservation(users[userId], books[index], startDate, endDate);
-            reservationsCount++;
+            int indexUser = getIndexById(userId);
+            if (indexUser == -1)
+            {
+                System.out.println("The user id is incorrect");
+            }
+            else
+            {
+                reservations[reservationsCount] = new Reservation(users[indexUser], books[index], startDate, endDate);
+                reservationsCount++;
+            }
         }
     }
 
@@ -44,10 +52,12 @@ public class LibraryService
     {
         for (int i = 0; i < reservationsCount; i++)
         {
+            System.out.println(reservations[i].getUser().getId());
+            System.out.println(reservations[i].getBook().getTitle());
             if (reservations[i].getUser().getId() == userId && reservations[i].getBook().getTitle().equals(bookName))
             {
                 checkReturnDate(reservations[i]);
-                for (int j = i; j < reservations.length - 1; j++)
+                for (int j = i; j < reservationsCount - 1; j++)
                 {
                     reservations[j] = reservations[j + 1];
                 }
@@ -99,5 +109,17 @@ public class LibraryService
     {
         books[booksCount] = new Book(bookId, title);
         booksCount++;
+    }
+
+    public int getIndexById(int userId)
+    {
+        for (int i = 0; i < usersCount; i++)
+        {
+            if (users[i].getId() == userId)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 }

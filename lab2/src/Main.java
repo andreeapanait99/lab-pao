@@ -44,7 +44,6 @@ public class Main
                     userId = scanner.nextInt();
                     scanner.nextLine();
                     bookName = scanner.nextLine();
-                    scanner.nextLine();
                     dateString = scanner.nextLine();
                     DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date endDate = new Date();
@@ -61,7 +60,8 @@ public class Main
                 case 4:
                     System.out.println("Enter user id and book name:");
                     userId = scanner.nextInt();
-                    bookName = scanner.next();
+                    scanner.nextLine();
+                    bookName = scanner.nextLine();
                     libraryService.returnBook(userId, bookName);
                     break;
                 case 5:
