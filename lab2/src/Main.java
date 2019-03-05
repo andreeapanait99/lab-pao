@@ -22,26 +22,30 @@ public class Main
             System.out.println("4 - Return book");
             System.out.println("5 - Check all books");
             System.out.println("6 - Search for a certain book");
-            option = scanner.nextInt(option);
+             option = scanner.nextInt();
             switch (option)
             {
                 case 1:
                     System.out.println("Enter book id and title:");
-                    bookId = scanner.nextInt(bookId);
-                    title = scanner.next(title);
+                    bookId = scanner.nextInt();
+                    scanner.nextLine();
+                    title = scanner.nextLine();
                     libraryService.addBook(bookId, title);
                     break;
                 case 2:
                     System.out.println("Enter user id and name:");
-                    userId = scanner.nextInt(userId);
-                    name = scanner.next(name);
+                    userId = scanner.nextInt();
+                    scanner.nextLine();
+                    name = scanner.next();
                     libraryService.registerUser(userId, name);
                     break;
                 case 3:
                     System.out.println("Enter user id, book name and end date (dd/mm/yyyy):");
-                    userId = scanner.nextInt(userId);
-                    bookName = scanner.next(bookName);
-                    dateString = scanner.next(dateString);
+                    userId = scanner.nextInt();
+                    scanner.nextLine();
+                    bookName = scanner.nextLine();
+                    scanner.nextLine();
+                    dateString = scanner.nextLine();
                     DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date endDate = new Date();
                     try
@@ -56,13 +60,13 @@ public class Main
                     break;
                 case 4:
                     System.out.println("Enter user id and book name:");
-                    userId = scanner.nextInt(userId);
-                    bookName = scanner.next(bookName);
+                    userId = scanner.nextInt();
+                    bookName = scanner.next();
                     libraryService.returnBook(userId, bookName);
                     break;
                 case 5:
                     Book[] books = libraryService.listAll();
-                    for (int i = 0; i < books.length; i++)
+                    for (int i = 0; i < libraryService.booksCount; i++)
                     {
                         System.out.println(books[i].getId());
                         System.out.println(books[i].getTitle());
@@ -70,7 +74,8 @@ public class Main
                     break;
                 case 6:
                     System.out.println("Enter title:");
-                    bookName = scanner.next(bookName);
+                    scanner.nextLine();
+                    bookName = scanner.nextLine();
                     if (libraryService.existsByName(bookName) == -1)
                     {
                         System.out.println("The book doesn't exist");

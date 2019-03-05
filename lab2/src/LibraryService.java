@@ -6,9 +6,9 @@ public class LibraryService
     private User[] users = new User[50];
     private Book[] books = new Book[50];
     Reservation[] reservations = new Reservation[50];
-    private int currentIndex = 0;
-    private int usersCount = 0;
-    private int booksCount = 0;
+    int reservationsCount = 0;
+    int usersCount = 0;
+    int booksCount = 0;
 
     Scanner scanner = new Scanner(System.in);
 
@@ -19,9 +19,9 @@ public class LibraryService
 
     public int existsByName(String bookName)
     {
-        for (int i = 0; i < books.length; i++)
+        for (int i = 0; i < booksCount; i++)
         {
-            if (books[i].getTitle().equals("bookName"))
+            if (books[i].getTitle().equals(bookName))
             {
                 return i;
             }
@@ -35,14 +35,14 @@ public class LibraryService
         if (index != -1)
         {
             Date startDate = new Date();
-            reservations[currentIndex] = new Reservation(users[userId], books[index], startDate, endDate);
-            currentIndex++;
+            reservations[reservationsCount] = new Reservation(users[userId], books[index], startDate, endDate);
+            reservationsCount++;
         }
     }
 
     public void returnBook(int userId, String bookName)
     {
-        for (int i = 0; i < reservations.length; i++)
+        for (int i = 0; i < reservationsCount; i++)
         {
             if (reservations[i].getUser().getId() == userId && reservations[i].getBook().getTitle().equals(bookName))
             {
@@ -51,6 +51,7 @@ public class LibraryService
                 {
                     reservations[j] = reservations[j + 1];
                 }
+                reservationsCount--;
                 System.out.println("Your book has been returned.");
             }
         }
@@ -74,10 +75,10 @@ public class LibraryService
         int index = existsByName(bookName);
         if (index == -1)
         {
-            System.out.println("No book exists in stock (now)");
+            System.out.println("This book doesn't exist in stock");
             return -1;
         }
-        for (int i = 0; i < reservations.length; i++)
+        for (int i = 0; i < reservationsCount; i++)
         {
             if (reservations[i].getBook().equals(books[index]))
             {
