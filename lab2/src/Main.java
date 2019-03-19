@@ -9,10 +9,10 @@ public class Main
     {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to our library!");
-        LibraryService libraryService = new LibraryService();
+        LibraryService libraryService =  LibraryService.getLibraryService();
         int option = 1;
-        int bookId = 0, userId = 0;
-        String title = "" , name = "", bookName = "", dateString = "";
+        int bookId, userId;
+        String title, name, bookName, dateString;
         while (option != 0)
         {
             System.out.println("0 - Stop");
@@ -22,15 +22,17 @@ public class Main
             System.out.println("4 - Return book");
             System.out.println("5 - Check all books");
             System.out.println("6 - Search for a certain book");
-             option = scanner.nextInt();
+            option = scanner.nextInt();
             switch (option)
             {
                 case 1:
-                    System.out.println("Enter book id and title:");
+                    System.out.println("Enter book id, title and author:");
                     bookId = scanner.nextInt();
                     scanner.nextLine();
                     title = scanner.nextLine();
-                    libraryService.addBook(bookId, title);
+                    scanner.nextLine();
+                    String author = scanner.nextLine();
+                    libraryService.addBook(bookId, title, author);
                     break;
                 case 2:
                     System.out.println("Enter user id and name:");
@@ -66,7 +68,7 @@ public class Main
                     break;
                 case 5:
                     Book[] books = libraryService.listAll();
-                    for (int i = 0; i < libraryService.booksCount; i++)
+                    for (int i = 0; i < libraryService.itemsCount; i++)
                     {
                         System.out.println(books[i].getId());
                         System.out.println(books[i].getTitle());

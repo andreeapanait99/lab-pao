@@ -1,31 +1,20 @@
-public class Book
+public class Book extends Item
 {
-    private int id;
-    private String title;
+    private String author;
 
-    public int getId()
+    public Book(int id, String title, String author)
     {
-        return id;
+        super(id, title);
+        this.setAuthor(author);
     }
 
-    public void setId(int id)
+    public String getAuthor()
     {
-        this.id = id;
+        return author;
     }
 
-    public String getTitle()
+    public void setAuthor(String author)
     {
-        return title;
-    }
-
-    public void setTitle(String title)
-    {
-        this.title = title;
-    }
-
-    public Book(int id, String title)
-    {
-        this.id = id;
-        this.title = title;
+        this.author = author;
     }
 }

@@ -4,24 +4,34 @@ import java.util.Scanner;
 public class LibraryService
 {
     private User[] users = new User[50];
-    private Book[] books = new Book[50];
+    private Item[] items = new Item[50];
     Reservation[] reservations = new Reservation[50];
     int reservationsCount = 0;
     int usersCount = 0;
-    int booksCount = 0;
+    int itemsCount = 0;
+    private static LibraryService instance;
 
-    Scanner scanner = new Scanner(System.in);
+    private LibraryService() {};
 
-    public Book[] listAll()
+    public static LibraryService getLibraryService()
     {
-        return books;
+        if (instance == null)
+        {
+            instance = new LibraryService();
+        }
+        return instance;
+    }
+
+    public Item[] listAll()
+    {
+        return items;
     }
 
     public int existsByName(String bookName)
     {
-        for (int i = 0; i < booksCount; i++)
+        for (int i = 0; i < itemsCount; i++)
         {
-            if (books[i].getTitle().equals(bookName))
+            if (items[i].getTitle().equals(bookName))
             {
                 return i;
             }
@@ -42,8 +52,11 @@ public class LibraryService
             }
             else
             {
-                reservations[reservationsCount] = new Reservation(users[indexUser], books[index], startDate, endDate);
-                reservationsCount++;
+                if (items[index] instanceof Book)
+                {
+                    reservations[reservationsCount] = new Reservation(users[indexUser], items[index], startDate, endDate);
+                    reservationsCount++;
+                }
             }
         }
     }
@@ -53,8 +66,8 @@ public class LibraryService
         for (int i = 0; i < reservationsCount; i++)
         {
             System.out.println(reservations[i].getUser().getId());
-            System.out.println(reservations[i].getBook().getTitle());
-            if (reservations[i].getUser().getId() == userId && reservations[i].getBook().getTitle().equals(bookName))
+            System.out.println(reservations[i].getItem().getTitle());
+            if (reservations[i].getUser().getId() == userId && reservations[i].getItem().getTitle().equals(bookName))
             {
                 checkReturnDate(reservations[i]);
                 for (int j = i; j < reservationsCount - 1; j++)
@@ -90,7 +103,7 @@ public class LibraryService
         }
         for (int i = 0; i < reservationsCount; i++)
         {
-            if (reservations[i].getBook().equals(books[index]))
+            if (reservations[i].getItem().equals(items[index]))
             {
                 System.out.println("Book is not available");
                 return -1;
@@ -105,10 +118,10 @@ public class LibraryService
         usersCount++;
     }
 
-    public void addBook(int bookId, String title)
+    public void addBook(int bookId, String title, String author)
     {
-        books[booksCount] = new Book(bookId, title);
-        booksCount++;
+        items[itemsCount] = new Book(bookId, title, author);
+        itemsCount++;
     }
 
     public int getIndexById(int userId)

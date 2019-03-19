@@ -3,7 +3,7 @@ import java.util.Date;
 public class Reservation
 {
     private User user;
-    private Book book;
+    private Item item;
     private Date startDate;
     private Date endDate;
 
@@ -17,14 +17,14 @@ public class Reservation
         this.user = user;
     }
 
-    public Book getBook()
+    public Item getItem()
     {
-        return book;
+        return item;
     }
 
-    public void setBook(Book book)
+    public void setItem(Item item)
     {
-        this.book = book;
+        this.item = item;
     }
 
     public Date getStartDate()
@@ -47,10 +47,10 @@ public class Reservation
         this.endDate = endDate;
     }
 
-    public Reservation(User user, Book book, Date startDate, Date endDate)
+    public Reservation(User user, Item item, Date startDate, Date endDate)
     {
         this.user = user;
-        this.book = book;
+        this.item = item;
         this.startDate = startDate;
         this.endDate = endDate;
     }
